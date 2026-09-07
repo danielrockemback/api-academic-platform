@@ -9,6 +9,7 @@ services:
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     depends_on:
       - database
+    restart: unless-stopped
 
   database:
     image: mcr.microsoft.com/mssql/server:latest
@@ -19,6 +20,7 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
 
   web:
     image: nginx:alpine
@@ -29,6 +31,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
+    restart: unless-stopped
 
 volumes:
   sqlserver_data:

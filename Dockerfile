@@ -14,8 +14,12 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /u
 RUN apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
 
-RUN pecl install sqlsrv-5.12.0 pdo_sqlsrv-5.12.0 \
-    && docker-php-ext-enable sqlsrv pdo_sqlsrv
+RUN curl -fsSL https://pecl.php.net/get/sqlsrv-5.12.0.tgz -o sqlsrv.tgz \
+    && curl -fsSL https://pecl.php.net/get/pdo_sqlsrv-5.12.0.tgz -o pdo_sqlsrv.tgz \
+    && pecl install sqlsrv.tgz \
+    && pecl install pdo_sqlsrv.tgz \
+    && docker-php-ext-enable sqlsrv pdo_sqlsrv \
+    && rm sqlsrv.tgz pdo_sqlsrv.tgz
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

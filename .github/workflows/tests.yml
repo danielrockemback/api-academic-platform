@@ -1,0 +1,50 @@
+name: Run Tests
+
+on:
+    pull_request:
+        branches:
+            - homologacao
+            - master
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Create .env file
+              run: |
+                  echo "APP_ENV=test" > .env
+                  echo "APP_SECRET=ci_secret_key" >> .env
+                  echo "DEFAULT_URI=http://localhost" >> .env
+                  echo "MSSQL_SA_PASSWORD=${{ secrets.MSSQL_SA_PASSWORD }}" >> .env
+
+            - name: Build and start containers
+              run: docker compose up -d --build
+
+            - name: Fix Git ownership inside container
+              run: docker compose exec -T app git config --global --add safe.directory /app
+
+            - name: Install Composer dependencies
+              run: docker compose exec -T app composer install --no-interaction
+
+            - name: Wait for SQL Server to be ready
+              run: |
+                  for i in {1..30}; do
+                    if docker compose exec -T database /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "${{ secrets.MSSQL_SA_PASSWORD }}" -C -Q "SELECT 1" &> /dev/null; then
+                      echo "SQL Server is ready!"
+                      exit 0
+                    fi
+                    echo "Waiting for SQL Server... ($i/30)"
+                    sleep 2
+                  done
+                  echo "SQL Server did not become ready in time"
+                  exit 1
+
+            - name: Run tests
+              run: docker compose exec -T app php vendor/bin/phpunit
+
+            - name: Stop containers
+              if: always()
+              run: docker compose down
