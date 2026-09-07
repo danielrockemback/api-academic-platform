@@ -12,5 +12,11 @@
 ###> local ###
 .env
 .env.dev
+.env.test
 .idea/
 ###< local ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
