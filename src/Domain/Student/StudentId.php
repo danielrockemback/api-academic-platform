@@ -25,6 +25,6 @@ final class StudentId
 
     public function equals(StudentId $other): bool
     {
-        return $this->value === $other->value;
+        return $this->getValue() === $other->getValue();
     }
 }

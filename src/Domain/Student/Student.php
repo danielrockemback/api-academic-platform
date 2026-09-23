@@ -10,7 +10,7 @@ use App\Domain\Shared\ValueObject\FullName;
 final class Student
 {
     public function __construct(
-        private readonly ?StudentId $id,
+        private readonly StudentId $id,
         private FullName $fullName,
         private Email $email
     ) {
