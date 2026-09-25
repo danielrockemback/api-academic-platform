@@ -6,7 +6,7 @@ namespace App\Domain\Enrollment;
 
 final class RegistrationNumber
 {
-    private const  LENGTH_REGISTRATION_NUMBER = 10;
+    private const LENGTH_REGISTRATION_NUMBER = 10;
     private const FORMART_REGISTRATION_NUMBER = 'AAAA-NNNNN';
 
     public function __construct(private readonly string $value)
@@ -25,7 +25,7 @@ final class RegistrationNumber
         }
 
         if (!str_contains($value, '-')) {
-            throw new \InvalidArgumentException("O número de registro de conter um hífen. {$formatRegistrationNumber}");
+            throw new \InvalidArgumentException("O número de registro deve conter um hífen. {$formatRegistrationNumber}");
         }
 
         if ($totalCharacters != self::LENGTH_REGISTRATION_NUMBER) {
