@@ -16,7 +16,7 @@ final class EnrollmentPeriodTest extends TestCase
         return new DateTimeImmutable("{$currentYear}-{$monthDay}");
     }
 
-    public function testShouldThrowDomainExceptionWhenStartYearIsBeforeCurrentYear(): void
+    public function test_should_throw_domain_exception_when_start_year_is_before_current_year(): void
     {
         $startAt = new DateTimeImmutable('-1 year');
         $expiresAt = $startAt->modify('+1 month');
@@ -27,7 +27,7 @@ final class EnrollmentPeriodTest extends TestCase
         new EnrollmentPeriod($startAt, $expiresAt);
     }
 
-    public function testShouldThrowDomainExceptionWhenStartYearIsMoreThanOneYearInFuture(): void
+    public function test_should_throw_domain_exception_when_start_year_is_more_than_one_year_in_future(): void
     {
         $startAt = new DateTimeImmutable('+2 years');
         $expiresAt = $startAt->modify('+1 month');
@@ -38,7 +38,7 @@ final class EnrollmentPeriodTest extends TestCase
         new EnrollmentPeriod($startAt, $expiresAt);
     }
 
-    public function testShouldThrowDomainExceptionWhenExpirationYearIsNotSameAsStartYear(): void
+    public function test_should_throw_domain_exception_when_expiration_year_is_not_same_as_start_year(): void
     {
         $startAt = $this->currentYearDate('01-01 00:00:00');
         $expiresAt = $startAt->modify('+2 years');
@@ -49,7 +49,7 @@ final class EnrollmentPeriodTest extends TestCase
         new EnrollmentPeriod($startAt, $expiresAt);
     }
 
-    public function testShouldThrowDomainExceptionWhenExpirationDateIsLessThanStartDate(): void
+    public function test_should_throw_domain_exception_when_expiration_date_is_less_than_start_date(): void
     {
         $startAt = $this->currentYearDate('06-15 00:00:00');
         $expiresAt = $startAt->modify('-1 day');
@@ -60,7 +60,7 @@ final class EnrollmentPeriodTest extends TestCase
         new EnrollmentPeriod($startAt, $expiresAt);
     }
 
-    public function testIsDateWithinPeriod(): void
+    public function test_is_date_within_period(): void
     {
         $startAt = $this->currentYearDate('01-15 00:00:00');
         $expiresAt = $this->currentYearDate('06-15 00:00:00');
@@ -71,7 +71,7 @@ final class EnrollmentPeriodTest extends TestCase
         $this->assertTrue($enrollmentPeriod->isDateWithPeriod($dateWithinPeriod));
     }
 
-    public function testTwoEnrollmentPeriodsWithSameDatesAreEqual(): void
+    public function test_two_enrollment_periods_with_same_dates_are_equal(): void
     {
         $startAt = $this->currentYearDate('01-15 00:00:00');
         $expiresAt = $this->currentYearDate('06-15 00:00:00');

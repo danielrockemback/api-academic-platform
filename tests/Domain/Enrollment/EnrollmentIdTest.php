@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class EnrollmentIdTest extends TestCase
 {
-    public function testCreateEnrollmentIdValid(): void
+    public function test_create_enrollment_id_valid(): void
     {
         $value = 10;
         $enrollmentId = new EnrollmentId($value);
@@ -17,7 +17,7 @@ class EnrollmentIdTest extends TestCase
         $this->assertSame($value, $enrollmentId->getValue());
     }
 
-    public function testCreateEnrollmentIdInvalid(): void
+    public function test_create_enrollment_id_invalid(): void
     {
         $id = -10;
 
@@ -27,7 +27,7 @@ class EnrollmentIdTest extends TestCase
         new EnrollmentId($id);
     }
 
-    public function testCreateEnrollmentIdEquals(): void
+    public function test_create_enrollment_id_equals(): void
     {
         $value = 11;
         $valueTwo = 11;
@@ -38,7 +38,7 @@ class EnrollmentIdTest extends TestCase
         $this->assertTrue($enrollmentId->equals($enrollmentIdTwo));
     }
 
-    public function testCreateEnrollmentIdNotEquals(): void
+    public function test_create_enrollment_id_not_equals(): void
     {
         $value = 11;
         $valueTwo = 22;

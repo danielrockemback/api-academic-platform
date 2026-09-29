@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class FullNameTest extends TestCase
 {
-    public function testValidFullName(): void
+    public function test_valid_full_name(): void
     {
         $value = 'Daniel Borges';
         $fullName = new FullName($value);
@@ -17,7 +17,7 @@ class FullNameTest extends TestCase
         $this->assertSame($value, $fullName->getValue());
     }
 
-    public function testInvalidFullNameEmpty(): void
+    public function test_invalid_full_name_empty(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('O nome não pode ser vazio.');
@@ -25,7 +25,7 @@ class FullNameTest extends TestCase
         new FullName('');
     }
 
-    public function testInvalidFullNameOnlyNumber(): void
+    public function test_invalid_full_name_only_number(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('O nome completo não pode ter números.');
@@ -33,7 +33,7 @@ class FullNameTest extends TestCase
         new FullName('1122334455');
     }
 
-    public function testInvalidFullNameWithLettersAndNumbers(): void
+    public function test_invalid_full_name_with_letters_and_numbers(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('O nome completo não pode ter números.');
@@ -41,7 +41,7 @@ class FullNameTest extends TestCase
         new FullName('Daniel Borges1');
     }
 
-    public function testInvalidFullNameLessFiveCharacters(): void
+    public function test_invalid_full_name_less_five_characters(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -51,7 +51,7 @@ class FullNameTest extends TestCase
         new FullName("Dani");
     }
 
-    public function testInvalidFullNameMoreThan255Characters(): void
+    public function test_invalid_full_name_more_than_255_characters(): void
     {
         $longFullName = str_repeat('a', FullName::MAX_LENGTH + 1);
 
@@ -63,7 +63,7 @@ class FullNameTest extends TestCase
         new FullName($longFullName);
     }
 
-    public function testInvalidFullNameFewerThanMinimumNameParts(): void
+    public function test_invalid_full_name_fewer_than_minimum_name_parts(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Digite o seu nome completo.');

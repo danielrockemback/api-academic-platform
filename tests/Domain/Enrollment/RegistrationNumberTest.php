@@ -20,7 +20,7 @@ class RegistrationNumberTest extends TestCase
         $this->currentYear = (new DateTimeImmutable())->format('Y');
     }
 
-    public function testCreatesValidRegistrationNumber(): void
+    public function test_creates_valid_registration_number(): void
     {
         $value = "{$this->currentYear}-00001";
 
@@ -29,7 +29,7 @@ class RegistrationNumberTest extends TestCase
         $this->assertSame($value, $registrationNumber->getValue());
     }
 
-    public function testThrowsExceptionWhenValueIsEmpty(): void
+    public function test_throws_exception_when_value_is_empty(): void
     {
         $value = '';
 
@@ -39,7 +39,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testThrowsExceptionWhenValueHasNoHyphen(): void
+    public function test_throws_exception_when_value_has_no_hyphen(): void
     {
         $formatRegistrationNumber = self::FORMART_REGISTRATION_NUMBER;
         $value = "{$this->currentYear}00001";
@@ -50,7 +50,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testThrowsExceptionWhenLengthIsNotTenCharacters(): void
+    public function test_throws_exception_when_length_is_not_ten_characters(): void
     {
         $formatRegistrationNumber = self::FORMART_REGISTRATION_NUMBER;
         $value = "{$this->currentYear}-1234";
@@ -61,7 +61,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testThrowsExceptionWhenYearPartIsNotNumeric(): void
+    public function test_throws_exception_when_year_part_is_not_numeric(): void
     {
         $value = '202K-12345';
 
@@ -71,7 +71,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testThrowsExceptionWhenYearIsNotCurrentYear(): void
+    public function test_throws_exception_when_year_is_not_current_year(): void
     {
         $lastYear = (new DateTimeImmutable('-1 year'))->format('Y');
         $value = $lastYear . '-12345';
@@ -82,7 +82,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testThrowsExceptionWhenSequentialNumberIsZeroOrLess(): void
+    public function test_throws_exception_when_sequential_number_is_zero_or_less(): void
     {
         $value = "{$this->currentYear}-00000";
 
@@ -92,7 +92,7 @@ class RegistrationNumberTest extends TestCase
         new RegistrationNumber($value);
     }
 
-    public function testTwoRegistrationNumbersWithSameValueAreEqual(): void
+    public function test_two_registration_numbers_with_same_value_are_equal(): void
     {
         $valueOne = "{$this->currentYear}-00001";
         $valueTwo = "{$this->currentYear}-00001";
@@ -103,7 +103,7 @@ class RegistrationNumberTest extends TestCase
         $this->assertTrue($registrationNumberOne->equals($registrationNumberTwo));
     }
 
-    public function testTwoRegistrationNumbersWithDifferentValueAreNotEqual(): void
+    public function test_two_registration_numbers_with_different_value_are_not_equal(): void
     {
         $valueOne = "{$this->currentYear}-00001";
         $valueTwo = "{$this->currentYear}-00009";
