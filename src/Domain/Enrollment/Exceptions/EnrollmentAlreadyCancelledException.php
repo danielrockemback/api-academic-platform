@@ -8,6 +8,6 @@ final class EnrollmentAlreadyCancelledException extends \DomainException
 {
     public function __construct()
     {
-        parent::__construct('Esta matrícula já está cancelada.');
+        parent::__construct('Não é possível cancelar essa matrícula, pois ela já está cancelada no nosso sistema.');
     }
 }

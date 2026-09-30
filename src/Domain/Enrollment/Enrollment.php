@@ -29,7 +29,7 @@ final class Enrollment
 
         if (!$this->period->isDateWithPeriod($date)) {
             throw new InvalidEnrollmentDateException(
-                'A data de cancelamento deve estar dentro do período da matrícula.'
+                'A data de cancelamento deve estar entre da data de matrícula e a data final do ano letivo.'
             );
         }
 
