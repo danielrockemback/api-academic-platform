@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Student;
 
 final class StudentId
@@ -23,6 +25,6 @@ final class StudentId
 
     public function equals(StudentId $other): bool
     {
-        return $this->value === $other->value;
+        return $this->getValue() === $other->getValue();
     }
 }

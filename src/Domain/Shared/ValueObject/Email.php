@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Domain\Shared\ValueObject;
+declare(strict_types=1);
 
+namespace App\Domain\Shared\ValueObject;
 
 final class Email
 {
