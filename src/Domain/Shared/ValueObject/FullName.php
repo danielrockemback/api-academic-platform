@@ -17,33 +17,33 @@ final class FullName
 
     private function validate(string $value): void
     {
-        $trimmedValue = trim($value);
-        $totalCharactersFullName = mb_strlen($trimmedValue);
-        $namePartsCount = count(explode(" ", $trimmedValue));
-        $hasOnlyLetters = preg_match('/^[\p{L}\s]+$/u', $trimmedValue);
-
-
-        if (empty($trimmedValue)) {
+        if (trim($value) === '') {
             throw new \InvalidArgumentException('O nome não pode ser vazio.');
         }
 
-        if (!$hasOnlyLetters) {
+        if ($value !== trim($value)) {
+            throw new \InvalidArgumentException('O nome não pode começar ou terminar com espaços.');
+        }
+
+        if (!preg_match('/^[\p{L} ]+$/u', $value)) {
             throw new \InvalidArgumentException('O nome completo não pode ter números.');
         }
 
-        if ($totalCharactersFullName < self::MIN_LENGTH) {
+        $totalCharacters = mb_strlen($value);
+
+        if ($totalCharacters < self::MIN_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('O nome deve ter pelo menos %d caracteres.', self::MIN_LENGTH)
             );
         }
 
-        if ($totalCharactersFullName > self::MAX_LENGTH) {
+        if ($totalCharacters > self::MAX_LENGTH) {
             throw new \InvalidArgumentException(
                 sprintf('O nome deve ter no máximo %d caracteres.', self::MAX_LENGTH)
             );
         }
 
-        if ($namePartsCount < self::MIN_NAME_PARTS) {
+        if (count(preg_split('/\s+/', $value)) < self::MIN_NAME_PARTS) {
             throw new \InvalidArgumentException('Digite o seu nome completo.');
         }
     }
