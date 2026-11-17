@@ -10,6 +10,9 @@ final class FullName
     public const MAX_LENGTH = 255;
     public const MIN_NAME_PARTS = 2;
 
+    // Partes de letras separadas por espaços, ou por um hífen/apóstrofo entre letras (ex.: Ana-Maria, D'Ávila).
+    private const ALLOWED_PATTERN = "/^[\\p{L}\\p{M}]+(?:(?: +|['-])[\\p{L}\\p{M}]+)*$/u";
+
     public function __construct(private readonly string $value)
     {
         $this->validate($value);
@@ -25,8 +28,12 @@ final class FullName
             throw new \InvalidArgumentException('O nome não pode começar ou terminar com espaços.');
         }
 
-        if (!preg_match('/^[\p{L} ]+$/u', $value)) {
+        if (preg_match('/\d/u', $value)) {
             throw new \InvalidArgumentException('O nome completo não pode ter números.');
+        }
+
+        if (!preg_match(self::ALLOWED_PATTERN, $value)) {
+            throw new \InvalidArgumentException('O nome contém caracteres inválidos.');
         }
 
         $totalCharacters = mb_strlen($value);
