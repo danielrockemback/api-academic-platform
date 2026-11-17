@@ -21,7 +21,7 @@ doctrine:
         auto_mapping: true
         mappings:
             App:
-                type: yaml
+                type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Domain'
