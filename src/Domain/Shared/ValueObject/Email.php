@@ -8,10 +8,10 @@ final class Email
 {
     const ERROR_MESSAGE = ' não é um endereço de email válido.';
 
-    public function __construct(private string $value)
+    public function __construct(private readonly string $value)
     {
         $this->validate($value);
-        $this->value = $value;
+
     }
 
     private function validate(string $value): void
