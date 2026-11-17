@@ -14,11 +14,16 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Create .env file
+              env:
+                  MSSQL_SA_PASSWORD: ${{ secrets.MSSQL_SA_PASSWORD }}
               run: |
+                  # URL-encode da senha (@, ! etc.) e % dobrado por causa do "resolve:" do doctrine.yaml
+                  ENCODED_PASSWORD=$(php -r 'echo rawurlencode(getenv("MSSQL_SA_PASSWORD"));' | sed 's/%/%%/g')
                   echo "APP_ENV=test" > .env
                   echo "APP_SECRET=ci_secret_key" >> .env
                   echo "DEFAULT_URI=http://localhost" >> .env
-                  echo "MSSQL_SA_PASSWORD=${{ secrets.MSSQL_SA_PASSWORD }}" >> .env
+                  echo "MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}" >> .env
+                  echo "DATABASE_URL=\"sqlsrv://sa:${ENCODED_PASSWORD}@database:1433/academic_platform?serverVersion=18&charset=UTF-8&TrustServerCertificate=true\"" >> .env
 
             - name: Build and start containers
               run: docker compose up -d --build
